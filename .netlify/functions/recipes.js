@@ -1,10 +1,17 @@
 const fetch = require('cross-fetch');
 const qs = require('qs');
 
-exports.handler = async (event, context) => {
-  const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
-  const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
+const AIRTABLE_API_KEY = process.env.AIRTABLE_API_KEY;
+const AIRTABLE_BASE_ID = process.env.AIRTABLE_BASE_ID;
 
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers':
+    'Origin, X-Requested-With, Content-Type, Accept',
+  'Content-Type': 'application/json',
+};
+
+exports.handler = async (event, context) => {
   const path = event.path;
   const pathParts = path.split('/');
   const recipeId = pathParts[4] || '';
@@ -20,12 +27,16 @@ exports.handler = async (event, context) => {
 
     return {
       statusCode: 200,
-      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(jsonResponse),
+      headers,
     };
   } catch (error) {
     console.error(error);
-    return { statusCode: 422, body: String(error) };
+    return {
+      statusCode: 422,
+      body: String(error),
+      headers,
+    };
   } finally {
     console.log(`****  Function completed\n`);
   }
