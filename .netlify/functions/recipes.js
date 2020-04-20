@@ -7,7 +7,7 @@ exports.handler = async (event, context) => {
 
   const path = event.path;
   const pathParts = path.split('/');
-  const recipeId = pathParts[4];
+  const recipeId = pathParts[4] || '';
   const apiParams = qs.stringify(event.queryStringParameters);
 
   const apiEndpoint = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Ricette/${recipeId}?${apiParams}&api_key=${AIRTABLE_API_KEY}`;

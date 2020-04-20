@@ -7,7 +7,7 @@ exports.handler = async event => {
 
   const path = event.path;
   const pathParts = path.split('/');
-  const categoryId = pathParts[4];
+  const categoryId = pathParts[4] || '';
   const apiParams = qs.stringify(event.queryStringParameters);
 
   const apiEndpoint = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Categorie/${categoryId}?${apiParams}&api_key=${AIRTABLE_API_KEY}`;
@@ -27,6 +27,6 @@ exports.handler = async event => {
     console.error(error);
     return { statusCode: 422, body: String(error) };
   } finally {
-    console.log(`****  Function completed\n`);
+    console.log(`**** Function completed\n`);
   }
 };
