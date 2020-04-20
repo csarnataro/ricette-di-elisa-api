@@ -1,0 +1,24 @@
+{
+  "name": "ricette-di-elisa-site",
+  "version": "1.0.0",
+  "description": "Site for `Ricette di Elisa`",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "cross-fetch": "^3.0.4",
+    "qs": "^6.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/csarnataro/ricette-di-elisa-site.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/csarnataro/ricette-di-elisa-site/issues"
+  },
+  "homepage": "https://github.com/csarnataro/ricette-di-elisa-site#readme"
+}
