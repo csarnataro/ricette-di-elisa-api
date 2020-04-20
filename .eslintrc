@@ -1,13 +1,10 @@
 {
   "env": {
-    "browser": true,
     "es6": true,
     "node": true
   },
   "extends": [
-    "plugin:react/recommended",
     "airbnb",
-    "prettier/react",
     "prettier"
   ],
   "parser": "babel-eslint",
@@ -16,17 +13,9 @@
     "sourceType": "module"
   },
   "plugins": [
-    "react",
     "prettier"
   ],
   "rules": {
-    "prettier/prettier": "error",
-    "react/jsx-wrap-multilines": [
-      "error",
-      {
-        "declaration": false,
-        "assignment": false
-      }
-    ]
+    "prettier/prettier": "error"
   }
 }
