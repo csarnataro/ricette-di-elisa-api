@@ -11,7 +11,7 @@ const schema = buildSchema(`
 `);
 
 // The root provides a resolver function for each API endpoint
-const root = {
+const rootValue = {
   hello: () => {
     return 'Hello world!';
   },
@@ -19,11 +19,16 @@ const root = {
 
 const app = express();
 
-app.use('/graphql', graphqlHTTP({
-  schema: schema,
-  rootValue: root,
+app.use('/.netlify/functions/recipes-graphql/', graphqlHTTP({
+  schema,
+  rootValue,
   graphiql: true,
 }));
+
+// app.get('/*', function (req, res) {
+//   res.write(`Hello World from ${req.url}`);
+//   res.end()
+// });
 
 module.exports.handler =
   process.env.NODE_ENV === 'local' ? app : serverless(app);
