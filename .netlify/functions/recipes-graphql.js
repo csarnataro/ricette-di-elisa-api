@@ -25,10 +25,5 @@ app.use('/graphql', graphqlHTTP({
   graphiql: true,
 }));
 
-// app.get('/*', function (req, res) {
-//   res.write(`Hello World from ${req.url}`);
-//   res.end()
-// });
-
 module.exports.handler =
   process.env.NODE_ENV === 'local' ? app : serverless(app);
