@@ -28,6 +28,7 @@ function proxy () {
   } else {
     // executed on aws lambda
     return async (event, context) => {
+      console.log(`in lambda function`)
       return fetchApi(event.path, event.queryStringParameters)
     }
   }
@@ -45,7 +46,7 @@ async function fetchApi(path, queryStringParameters) {
   const pathParts = path.split('/');
   const recipeId = pathParts[4] || '';
   const apiParams = qs.stringify(queryStringParameters);
-
+  console.log(`in fetchApi: ${path}`)
   const apiEndpoint = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/Ricette/${recipeId}?${apiParams}&api_key=${AIRTABLE_API_KEY}`;
 
   console.log(`**** Function called`);
