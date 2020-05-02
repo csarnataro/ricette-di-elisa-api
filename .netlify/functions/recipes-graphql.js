@@ -26,11 +26,9 @@ function proxy () {
       })
       .listen(3000, () => console.log('server started on port 3000'));
   } else {
-    // required as a module => executed on aws lambda
-    module.exports = async (event, context) => {
-      const path = event.path;
-      
-      return fetchApi(path, event.queryStringParameters)
+    // executed on aws lambda
+    return async (event, context) => {
+      return fetchApi(event.path, event.queryStringParameters)
     }
   }
 }
