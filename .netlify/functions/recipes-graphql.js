@@ -19,16 +19,16 @@ const root = {
 
 const app = express();
 
-app.use('/graphql', graphqlHTTP({
+app.use('/.netlify/functions/recipes-graphql', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
 }));
 
-app.get('/*', function (req, res) {
-  res.write(`Hello World from ${req.url}`);
-  res.end()
-});
+// app.get('/*', function (req, res) {
+//   res.write(`Hello World from ${req.url}`);
+//   res.end()
+// });
 
 module.exports.handler =
   process.env.NODE_ENV === 'local' ? app : serverless(app);
