@@ -19,7 +19,7 @@ const root = {
 
 const app = express();
 
-app.use('/.netlify/functions/recipes-graphql', graphqlHTTP({
+app.use('/', graphqlHTTP({
   schema: schema,
   rootValue: root,
   graphiql: true,
