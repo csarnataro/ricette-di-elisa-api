@@ -8,7 +8,9 @@
   },
   "dependencies": {
     "cross-fetch": "^3.0.4",
-    "qs": "^6.9.3"
+    "express": "^4.17.1",
+    "qs": "^6.9.3",
+    "serverless-http": "^2.3.2"
   },
   "repository": {
     "type": "git",
