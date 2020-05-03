@@ -1,6 +1,7 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
+const bodyParser = require('body-parser');
 const { buildSchema } = require('graphql');
 
 // Construct a schema, using GraphQL schema language
@@ -19,6 +20,7 @@ const rootValue = {
 
 const app = express();
 
+app.use(bodyParser.json());
 app.use('/.netlify/functions/recipes-graphql/', graphqlHTTP({
   schema,
   rootValue,
