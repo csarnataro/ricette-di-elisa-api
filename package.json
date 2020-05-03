@@ -11,7 +11,7 @@
     "cross-fetch": "^3.0.4",
     "express": "^4.17.1",
     "express-graphql": "^0.9.0",
-    "graphql": "^15.0.0",
+    "graphql": "14.4.1",
     "qs": "^6.9.3",
     "serverless-http": "^2.3.2"
   },
