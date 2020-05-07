@@ -3,7 +3,7 @@
  * $ NODE_ENV=local node test-graphql-locally.js 
  */
 
-const app = require('./.netlify/functions/recipes-graphql').handler
+const app = require('./.netlify/functions/graphql').handler
 const port = 3000
 
 app.listen(port)
