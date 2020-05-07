@@ -1,5 +1,7 @@
 const fetch = require('cross-fetch');
 const { GraphQLObjectType, GraphQLString } = require('graphql');
+const { apiEndpoint } = require('./api-helper');
+
 
 const mapCategory = record => ({
   id: record.id,

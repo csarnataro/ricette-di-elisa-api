@@ -7,4 +7,4 @@ const app = require('./.netlify/functions/graphql').handler
 const port = 3000
 
 app.listen(port)
-console.log(`listening on http://localhost:${port}`)
+console.log(`listening on http://localhost:${port}/.netlify/functions/graphql`)

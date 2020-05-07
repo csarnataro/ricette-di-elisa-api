@@ -1,7 +1,8 @@
-const serverless = require('serverless-http');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const express = require('express');
 const graphqlHTTP = require('express-graphql');
-const bodyParser = require('body-parser');
+const serverless = require('serverless-http');
 const schema = require('./graphql/schema')
 
 const app = express();
@@ -9,6 +10,7 @@ const app = express();
 app.use(bodyParser.json());
 app.use(
   '/.netlify/functions/graphql/',
+  cors(),
   graphqlHTTP({
     schema,
     // rootValue: root,
