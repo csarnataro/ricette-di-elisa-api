@@ -4,6 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
+  GraphQLNonNull,
   GraphQLBoolean,
   GraphQLList,
 } = require('graphql');
@@ -70,7 +71,7 @@ const schema = new GraphQLSchema({
       recipe: {
         type: Recipe,
         args: {
-          id: { type: GraphQLString },
+          id: { type: GraphQLNonNull(GraphQLString) },
         },
         resolve: (_, { id }) => {
           return fetch(apiEndpoint({ tableName: 'Ricette', id }))
