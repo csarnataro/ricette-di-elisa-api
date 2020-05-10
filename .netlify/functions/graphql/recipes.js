@@ -4,8 +4,37 @@ const { apiEndpoint } = require('./api-helper');
 
 const PAGE_SIZE = 100;
 
-const fetchRecipes = async ({ first = PAGE_SIZE, skip = 0, categoryName }) => {
-  const upperLimit = skip + first;
+const buildFormula = (categoryName, query) => {
+  let categoryFormula
+  let queryFormula
+  if (categoryName) {
+    categoryFormula = `(FIND(LOWER("${categoryName}"),LOWER({Categoria}))>0)`;
+  }
+
+  if (query) {
+    queryFormula = `(FIND(LOWER("${query}"),LOWER({Name}))>0)`;
+  }
+
+  switch (true) {
+    case (typeof categoryFormula !== 'undefined' && typeof queryFormula !== 'undefined'):
+      return `AND(${categoryFormula}, ${queryFormula})`
+    case (typeof categoryFormula !== 'undefined'):
+      return categoryFormula
+    case (typeof queryFormula !== 'undefined'):
+      return queryFormula
+    default:
+      break;
+  }
+
+}
+
+const fetchRecipes = async ({
+  first = 1000,
+  skip = 0,
+  categoryName,
+  query,
+}) => {
+  const upperLimit = 1000; // skip + first;
   const records = [];
   let offset = null;
   for (
@@ -13,27 +42,37 @@ const fetchRecipes = async ({ first = PAGE_SIZE, skip = 0, categoryName }) => {
     i * PAGE_SIZE < upperLimit && typeof offset !== 'undefined';
     i++
   ) {
-    
     const additionalQueryParams = {
       'sort[0][field]': 'Name',
-      'sort[0][direction]': 'asc'
+      'sort[0][direction]': 'asc',
+    };
+
+    const filterByFormula = buildFormula(categoryName, query)
+    console.log('********** BEGIN: recipes 51 **********')
+    console.dir(filterByFormula, { colors: true, depth: 16 })
+    console.log('********** END:   recipes 51 **********')
+    if (filterByFormula) {
+      additionalQueryParams.filterByFormula = filterByFormula;
     }
 
-    if (categoryName) {
-      additionalQueryParams.filterByFormula = `(FIND(LOWER("${categoryName}"),LOWER({Categoria}))>0)`
-    }
-
-    const response = await fetch(apiEndpoint({ 
-      tableName: 'Ricette', 
-      offset, 
-      additionalQueryParams
-    }));
+    const response = await fetch(
+      apiEndpoint({
+        tableName: 'Ricette',
+        offset,
+        additionalQueryParams,
+      })
+    );
     const json = await response.json();
     offset = json.offset;
     records.push(...json.records);
   }
-  const slicedRecords = records.slice(skip, upperLimit);
-  return slicedRecords.map(mapRecipe);
+  const finalRecords = records.slice(skip, first + skip);
+  console.log(`Should return ${finalRecords.length} records`);
+
+  return {
+    records: finalRecords.map(mapRecipe),
+    totalCount: records.length,
+  };
 };
 
 const mapRecipe = record => ({

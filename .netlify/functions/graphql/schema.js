@@ -4,6 +4,7 @@ const {
   GraphQLObjectType,
   GraphQLString,
   GraphQLInt,
+  GraphQLBoolean,
   GraphQLList,
 } = require('graphql');
 
@@ -25,18 +26,45 @@ const schema = new GraphQLSchema({
       categories: {
         type: new GraphQLList(Category),
         resolve: (_, args) => {
-          return fetchCategories(args)
+          return fetchCategories(args);
         },
       },
+      // recipes: {
+      //   type: new GraphQLList(Recipe),
+      //   args: {
+      //     first: { type: GraphQLInt },
+      //     skip: { type: GraphQLInt },
+      //     categoryName: { type: GraphQLString }
+      //   },
+      //   resolve: (_, args) => {
+      //     return fetchRecipes(args)
+      //   },
+      // },
+      /* EXPERIMENTAL
+       */
+
       recipes: {
-        type: new GraphQLList(Recipe),
+        type: new GraphQLObjectType({
+          name: 'AllRecipes',
+          fields: () => ({
+            records: {
+              type: new GraphQLList(Recipe),
+              resolve: parent => parent.records,
+            },
+            totalCount: {
+              type: GraphQLInt,
+              resolve: parent => parent.totalCount,
+            },
+          }),
+        }),
         args: {
           first: { type: GraphQLInt },
           skip: { type: GraphQLInt },
-          categoryName: { type: GraphQLString } 
+          categoryName: { type: GraphQLString },
+          query: { type: GraphQLString }
         },
         resolve: (_, args) => {
-          return fetchRecipes(args)
+          return fetchRecipes(args);
         },
       },
       recipe: {
@@ -45,7 +73,7 @@ const schema = new GraphQLSchema({
           id: { type: GraphQLString },
         },
         resolve: (_, { id }) => {
-          return fetch(apiEndpoint({tableName: 'Ricette', id}))
+          return fetch(apiEndpoint({ tableName: 'Ricette', id }))
             .then(response => response.json())
             .then(mapRecipe);
         },

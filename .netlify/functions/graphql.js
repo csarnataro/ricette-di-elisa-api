@@ -13,7 +13,6 @@ app.use(
   cors(),
   graphqlHTTP({
     schema,
-    // rootValue: root,
     graphiql: true,
   })
 );
