@@ -4,7 +4,7 @@
   "description": "Site for `Ricette di Elisa`",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -26,5 +26,13 @@
   "bugs": {
     "url": "https://github.com/csarnataro/ricette-di-elisa-site/issues"
   },
-  "homepage": "https://github.com/csarnataro/ricette-di-elisa-site#readme"
+  "homepage": "https://github.com/csarnataro/ricette-di-elisa-site#readme",
+  "devDependencies": {
+    "eslint": "^7.0.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "jest": "^26.0.1",
+    "nock": "^12.0.3",
+    "nodemon": "^2.0.4"
+  }
 }

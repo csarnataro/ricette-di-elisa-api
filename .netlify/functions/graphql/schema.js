@@ -5,13 +5,14 @@ const {
   GraphQLString,
   GraphQLInt,
   GraphQLNonNull,
-  GraphQLBoolean,
   GraphQLList,
 } = require('graphql');
 
-const { apiEndpoint } = require('./api-helper');
-const { Category, fetchCategories } = require('./categories');
-const { Recipe, mapRecipe, fetchRecipes } = require('./recipes');
+const { buildApiEndpointURL } = require('./api-endpoint');
+const { Category } = require('./categories');
+const { fetchCategories } = require('./fetch-categories');
+const { Recipe } = require('./recipes');
+const { mapRecipe, fetchRecipes } = require('./fetch-recipes');
 
 const schema = new GraphQLSchema({
   query: new GraphQLObjectType({
@@ -26,23 +27,8 @@ const schema = new GraphQLSchema({
       },
       categories: {
         type: new GraphQLList(Category),
-        resolve: (_, args) => {
-          return fetchCategories(args);
-        },
+        resolve: (_, args) => fetchCategories(args),
       },
-      // recipes: {
-      //   type: new GraphQLList(Recipe),
-      //   args: {
-      //     first: { type: GraphQLInt },
-      //     skip: { type: GraphQLInt },
-      //     categoryName: { type: GraphQLString }
-      //   },
-      //   resolve: (_, args) => {
-      //     return fetchRecipes(args)
-      //   },
-      // },
-      /* EXPERIMENTAL
-       */
 
       recipes: {
         type: new GraphQLObjectType({
@@ -50,11 +36,11 @@ const schema = new GraphQLSchema({
           fields: () => ({
             records: {
               type: new GraphQLList(Recipe),
-              resolve: parent => parent.records,
+              resolve: (parent) => parent.records,
             },
             totalCount: {
               type: GraphQLInt,
-              resolve: parent => parent.totalCount,
+              resolve: (parent) => parent.totalCount,
             },
           }),
         }),
@@ -62,22 +48,18 @@ const schema = new GraphQLSchema({
           first: { type: GraphQLInt },
           skip: { type: GraphQLInt },
           categoryName: { type: GraphQLString },
-          query: { type: GraphQLString }
+          query: { type: GraphQLString },
         },
-        resolve: (_, args) => {
-          return fetchRecipes(args);
-        },
+        resolve: (_, args) => fetchRecipes(args),
       },
       recipe: {
         type: Recipe,
         args: {
           id: { type: GraphQLNonNull(GraphQLString) },
         },
-        resolve: (_, { id }) => {
-          return fetch(apiEndpoint({ tableName: 'Ricette', id }))
-            .then(response => response.json())
-            .then(mapRecipe);
-        },
+        resolve: (_, { id }) => fetch(buildApiEndpointURL({ tableName: 'Ricette', id }))
+          .then((response) => response.json())
+          .then(mapRecipe),
       },
     }),
   }),
