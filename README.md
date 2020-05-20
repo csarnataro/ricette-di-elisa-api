@@ -19,8 +19,10 @@ and store her recipes in a safe place (Airtable).
 Too many broken hard disks during these last 15 years and no backups caused
 the loss of many many great recipes.
 
-Moreover, I would like to experiment with [Flutter](https://flutter.dev/) or
-Kotlin/Android to create a mobile
+Moreover, I wanted to do some experiments with [GraphQL](https://graphql.org/)
+deployed with serverless functions.
+Eventually I would like to create a [Flutter](https://flutter.dev/) or
+Kotlin/Android mobile
 app to share those recipes with friends and whoever loves Italian home cuisine.
 
 ## Airtable
@@ -37,8 +39,8 @@ The credentials to access the private Airtable database are stored on Netlify
 as environemnt variables. See:
 [https://docs.netlify.com/configure-builds/environment-variables/](https://docs.netlify.com/configure-builds/environment-variables/)
 
-This means that confidential information, e.g. the private Airtable `api_key`
-are not exposed to the final user nor are they stored in the Git repository.
+This means that confidential information, e.g. the private Airtable `api_key`,
+is not exposed to the final user nor is it stored in the Git repository.
 
 ## Limits and quotas
 
